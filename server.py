@@ -12,8 +12,17 @@ print("I'm listening connections")
 while True:
     conn, addr = s.accept()
     print("Connected - ", addr)
-    res = b"Hello, my friend!"  # encode(fmt)
-    conn.send(res)
+
+    print("Waiting for request")
+    req = ""
+    while True:
+        data = conn.recv(4096)
+
+        if not data:
+            break
+        req += data.decode()
+
+    print(req)
 
     conn.close()
 

@@ -6,11 +6,11 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(HOST)
 print("Connected to", HOST)
 
-msg = ""
-while True:
-    data = client.recv(8)
-    msg += data.decode("utf-8")
-    if not len(data):
-        break
+sent = 0
+request = b" GET / HTTP1.1\r\nHost:localhost:1000\r\n\r\n"
+# while sent < len(request):  # socket.sendall()
+#     sent = sent + client.send(request[sent:])
 
-print(msg)
+client.sendall(request)
+
+print("Sent msg")
