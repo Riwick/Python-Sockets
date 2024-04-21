@@ -1,4 +1,5 @@
 import socket
+import pickle
 
 HOST = ("localhost", 10000)
 
@@ -9,20 +10,33 @@ s.listen()
 
 print("I'm listening connections")
 
+# while True:
+#     conn, addr = s.accept()
+#     print("Connected - ", addr)
+#
+#     print("Waiting for request")
+#     req = ""
+#     while True:
+#         data = conn.recv(4096)
+#
+#         if not data:
+#             break
+#         req += data.decode()
+#
+#     print(req)
+#
+#     conn.close()
+
+d = {
+    "name": "Riwi",
+    "age": 18
+}
+
 while True:
     conn, addr = s.accept()
     print("Connected - ", addr)
 
-    print("Waiting for request")
-    req = ""
-    while True:
-        data = conn.recv(4096)
-
-        if not data:
-            break
-        req += data.decode()
-
-    print(req)
+    resp = pickle.dumps(d)
+    conn.send(resp)
 
     conn.close()
-
